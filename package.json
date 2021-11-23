@@ -34,7 +34,7 @@
     "handlebars": "^4.0.11",
     "lodash": "^4.17.4",
     "nodemailer": "^4.4.1",
-    "three": "^0.88.0",
+    "three": "^0.113.2",
     "three-obj-exporter": "0.0.1",
     "tui-image-editor": "^3.11.0",
     "vue": "^2.4.4",
