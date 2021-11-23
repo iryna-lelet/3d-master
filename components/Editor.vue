@@ -1,5 +1,5 @@
 <template>
- <div class="wrapp">
+ <div class="wrap">
   <el-row type="flex" :gutter="8" id="app" class="stretch">
     <el-col :span="18" class="stretch">
       <div class="tool horizontal space around download"></div>
@@ -8,8 +8,8 @@
         </el-col>
         <el-col :span="14">
           <div id="drawer" ref="drawer" style="width:900px; height: 600px;">
-          
-            <canvas style="background: url(./img-fons.png); display:none;" id="d2" ref="d2"
+
+            <canvas style="background: url('./img-fons.png'); display:none;" id="d2" ref="d2"
               @mousedown="start($event)"
               @mousemove="action($event)"
               @dblclick="focus($event)"
@@ -17,34 +17,34 @@
               @mouseout="stop($event)">
             </canvas>
             <tui-image-editor ref="tuiImageEditor" @objectAdded="objectAdded" @objectActivated="objectActivated" :options="options"></tui-image-editor>
-         
+
           </div>
         </el-col>
         <div class="red_border"></div>
         <div class="green_border"></div>
         <div class="up_panel"></div>
-        
+
         <div class="down_panel"></div>
       </el-row>
-        
+
     </el-col>
     <el-col :span="6" class="column">
     <div class="fix-3d_tool">
           <div class="tool horizontal space around">
             <div class="button-fix-mini3d">
-            
+
                 <el-button class="fix-button__mini" type="text" icon="fa fa-share" @click="cover"> Просмотр <br> на модели</el-button>
-          
+
                 <el-button class="fix-button__mini" type="text" icon="fa fa-pause" @click="animate(false)" v-if="preview.animation"> Старт / <br> Стоп</el-button>
                 <el-button class="fix-button__mini" type="text" icon="fa fa-play" @click="animate(true)" v-else> Старт / <br> Стоп</el-button>
-                
-               
-                <el-button class="fix-button__mini" type="text" icon="fa fa-trash" @click="preview.clear()"> Очистить <br> модель </el-button> 
+
+
+                <el-button class="fix-button__mini" type="text" icon="fa fa-trash" @click="preview.clear()"> Очистить <br> модель </el-button>
                 </div>
                 <!--<span class="block title">
                   <el-color-picker v-model="sceneColor" size="mini" @change="changeSceneColor"></el-color-picker>
-                  <span class="title"> Scene </span>-->
-                </span>
+                  <span class="title"> Scene </span>
+                </span>-->
               </div>
               <div id="previewMini" ref="previewMini">
                 <canvas id="mini3d" ref="mini3d" @click="show">
@@ -52,9 +52,9 @@
                 </canvas>
           </div>
       </div>
-      <el-button class="btn_downdload" type="text" @click="download"> Скачать модель </el-button>
-      <el-button class="btn_downdload" type="text" @click="downloadImage"> Скачать текстуру </el-button>
-      <el-button class="btn_downdload" type="text" @click="$router.push('help')"> Подсказка </el-button>
+      <el-button class="btn_download" type="text" @click="download"> Скачать модель </el-button>
+      <el-button class="btn_download" type="text" @click="downloadImage"> Скачать текстуру </el-button>
+      <el-button class="btn_download" type="text" @click="$router.push('help')"> Подсказка </el-button>
       <el-dialog
         custom-class="column"
         :visible.sync="dialogVisible"
@@ -63,10 +63,11 @@
           <order-form :source="source" />
         </span>
         <div id="previewMax" ref="previewMax">
-          <canvas id="max3d" ref="max3d"
-            @mousedown="grab($event)"
-            @mousemove="rotate($event)"
-            @mouseup="release($event)">
+          <canvas id="max3d" ref="max3d" >
+            <!-- @mousedown="grab($event)"
+@mouseup="release($event)"
+             @mousemove="rotate($event)"-->
+
           </canvas>
         </div>
         <span slot="footer">
@@ -95,7 +96,7 @@
       </transition-group>
     </el-col>
   </el-row>
-    <!--  <div class="help_btn"><i class="fas fa-question"></i></div> -->
+      <div class="help_btn"><i class="fas fa-question"></i></div>
   </div>
 </template>
 
@@ -111,7 +112,7 @@ import "../assets/js/reimg";
 import { fabric } from "fabric";
 
 let locale_ru_RU = {
-  Undo: "Отметнить",
+  Undo: "Отменить",
   Redo: "Повторить",
   Tint: "Оттенок",
   Reset: "Сброс",
@@ -145,7 +146,7 @@ let locale_ru_RU = {
   Left: "Слева",
   Right: "Справа",
   Center: "Центровать",
-  "Load Mask Image": "Загурзить изображение маски",
+  "Load Mask Image": "Загрузить изображение маски",
   Arrow: "Стрелка",
   "Arrow-2": "Стрелка-2",
   "Arrow-3": "Стрелка-3",
@@ -291,32 +292,12 @@ export default {
       let elem = document.querySelector(".tui-image-editor-submenu");
       elem.classList.remove('visible');
       elem.classList.add('hidden');
-      /*console.log(props);
-      console.log(props.type);
-      console.log(props.id);
-      const data = document.querySelector(".lower-canvas");
-      const cx = data.getContext("2d");
-
-      let imagedata = cx.getImageData(1,1,120,120)
-      var canvas = document.createElement('canvas');
-      var ctx = canvas.getContext('2d');
-      canvas.width = imagedata.width;
-      canvas.height = imagedata.height;
-      ctx.putImageData(imagedata, 0, 0);
-
-      var png = ReImg.fromCanvas(canvas).toPng();
-      this.$refs.tuiImageEditor.invoke('addImageObject', png.src);*/
     },
     objectAdded(props) {
       /* let canvas = new fabric.Canvas('can');*/
       console.log(props);
       const data = document.querySelector(".lower-canvas");
       const cx = data.getContext("2d");
-      /*var circle = new fabric.Circle({
-        radius: 120, fill: 'green', left: 20, top: 0
-      });
-      canvas.add(circle);
-      canvas.renderAll();*/
       let imagedata = cx.getImageData(1, 1, 120, 120);
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");
@@ -583,10 +564,10 @@ export default {
     });
     this.hover = this.drawer.helpers.hover();
     this.preview = new Preview(this.$refs.mini3d, {
-      path: "../assets/models/cup.json",
+      path: "../assets/models/cup/cup.gltf",
       width: this.$refs.previewMini.clientWidth,
       height: this.$refs.previewMini.clientHeight,
-      sceneColor: this.sceneColor,
+      sceneColor: "#e8e8e8",
       animation: false,
     });
     this.preview.render();
@@ -882,7 +863,7 @@ body {
   flex-direction: column;
 }
 .tool .title {
-  font-family: Arial;
+  font-family: Arial,serif;
   font-weight: 500;
   font-size: 14px;
   text-transform: capitalize;
@@ -954,7 +935,7 @@ body {
   border: 1px dashed transparent;
   height: 33%;
   cursor: pointer;
-  box-sizing: content;
+  box-sizing: content-box;
 }
 #previewMax {
   flex-grow: 1;
@@ -1033,7 +1014,7 @@ span#fix-upload {
 }
 .el-button {
   font-size: 16px;
-  border-radius: none;
+  border-radius: 0;
 }
 .figures {
   padding: 11px 15px 15px 14px;
@@ -1085,7 +1066,7 @@ span#fix-upload {
   display: flex;
   justify-content: center;
 }
-.wrapp {
+.wrap {
   display: flex;
   justify-content: center;
 }
@@ -1097,7 +1078,7 @@ span#fix-upload {
   border-radius: 10px;
   background: #fff;
 }
-.fix__btn_downdload {
+.fix__btn_download {
   background-color: #336699;
   display: inline-block;
   margin: 3px 50px 3px 220px;
@@ -1109,16 +1090,16 @@ span#fix-upload {
   display: inline-block;
   margin: 0 0 0 45px;
 }
-.btn_downdload {
+.btn_download {
   width: 270px;
   margin-top: 10px;
   padding: 13px 25px 13px 25px;
   border-radius: 0 !important;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
-  transition: all 0.2 easa-out;
+  transition: all 0.2s ease-out;
   border: 1px solid #4b6891;
 }
-.btn_downdload:hover {
+.btn_download:hover {
   background-color: #e8e8e8 !important;
   border-color: #4b6891 !important;
   color: #4b6891;
@@ -1177,7 +1158,7 @@ i.fa.fa-chevron-down {
   padding: 5px 4px 4px 3px;
   font-size: 16px;
   background-color: #4b6891 !important;
-  border-radius: 0px;
+  border-radius: 0;
 }
 .button--trigger:hover .fa-undo {
   color: #3e3b45;
@@ -1191,7 +1172,7 @@ i.fa.fa-chevron-down {
   margin-right: 2px;
 }
 button.el-button.button--trigger.el-button--text:hover .fa-undo {
-  color: 3e3b45;
+  color: #3e3b45;
 }
 
 .el-button--text {
@@ -1256,7 +1237,7 @@ i.fa.fa-eye {
 }
 .text__user {
   font-size: 18px;
-  font-family: Arial;
+  font-family: Arial,serif;
   text-align: center;
   padding: 9px 0;
   margin: 0;
@@ -1352,7 +1333,6 @@ i.fa.fa-eye {
 }
 .user__rotate {
   display: inline-block;
-  display: inline-block;
   position: absolute;
   left: 17px;
   font-size: 27px;
@@ -1364,7 +1344,7 @@ i.fa.fa-eye {
   top: 82px;
   left: 15px;
   font-size: 16px;
-  font-family: Arial;
+  font-family: Arial,serif;
 }
 .el-input__inner {
   background: #fff !important;
@@ -1419,14 +1399,14 @@ i.fa.fa-eye {
   position: relative;
   top: 5px;
   margin: 0;
-  font-family: Arial;
+  font-family: Arial,serif;
   font-weight: bold;
 }
 .small__T {
   display: inline-block;
   font-size: 13px;
   margin: 0;
-  font-family: Arial;
+  font-family: Arial,serif;
   position: relative;
   top: 5px;
   left: 5px;
