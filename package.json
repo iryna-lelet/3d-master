@@ -1,0 +1,58 @@
+{
+  "name": "wrap3d",
+  "description": "Wrap3D - the simple application for wrapping a 3d model with your own image",
+  "version": "1.0.0",
+  "author": "Kyrylo <kyrylo.onufriiev@gmail.com>",
+  "license": "MIT",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onufriievkyrylo/3dcover.git"
+  },
+  "scripts": {
+    "start": "node ./server/app.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot",
+    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "dependencies": {
+    "@doodle3d/threejs-export-obj": "0.0.8",
+    "@toast-ui/vue-image-editor": "^1.3.0",
+    "axios": "^0.17.1",
+    "b64-to-blob": "^1.2.19",
+    "body-parser": "^1.18.2",
+    "element-ui": "^2.0.5",
+    "express": "^4.16.2",
+    "fabric": "^4.3.0",
+    "file-saver": "^2.0.5",
+    "handlebars": "^4.0.11",
+    "lodash": "^4.17.4",
+    "nodemailer": "^4.4.1",
+    "three": "^0.88.0",
+    "three-obj-exporter": "0.0.1",
+    "tui-image-editor": "^3.11.0",
+    "vue": "^2.4.4",
+    "vue-router": "^3.4.9",
+    "vue-template-compiler": "^2.5.8",
+    "vuelidate": "^0.6.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.0.16",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "cross-env": "^5.1.1",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "vue-loader": "^13.0.5",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
+  }
+}

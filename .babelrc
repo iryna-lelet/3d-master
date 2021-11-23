@@ -1,0 +1,7 @@
+{
+  "presets": [
+    ["env", { "modules": false }],
+    "es2016",
+    "stage-3"
+  ]
+}
