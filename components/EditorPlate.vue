@@ -315,6 +315,12 @@ export default {
     animate(animation) {
       this.preview.animation = this.animation = animation;
     },
+    changeBaseColor() {
+      this.preview.baseColor = this.baseColor;
+    },
+    changeSceneColor() {
+      this.preview.sceneColor = this.sceneColor;
+    },
     changeFontType(name) {
       this.font.type[name] = !this.font.type[name];
     },
@@ -464,7 +470,7 @@ export default {
             width: this.$refs.previewMax.clientWidth,
             height: this.$refs.previewMax.clientHeight,
           });
-          // this.mirror.render();
+          this.mirror.render();
         });
       }
     },
@@ -558,7 +564,7 @@ export default {
     });
     this.hover = this.drawer.helpers.hover();
     this.preview = new Preview(this.$refs.mini3d, {
-      path: "../assets/models/cup/cup.gltf",
+      path: "../assets/models/plate/plate.gltf",
       width: this.$refs.previewMini.clientWidth,
       height: this.$refs.previewMini.clientHeight,
       sceneColor: "#e8e8e8",

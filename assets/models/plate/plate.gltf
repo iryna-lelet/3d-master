@@ -139,9 +139,9 @@
       }
    ],
    "textures": [
-      { "sampler": 0, "source": 0, "name": "reWalls4439.png" },
+      { "sampler": 0, "source": 0, "name": "screenshot.jpg" },
       { "sampler": 0, "source": 1, "name": "screenshot.jpg" }
    ],
-   "images": [{ "uri": "reWalls4439.png" }, { "uri": "screenshot.jpg" }],
+   "images": [{ "uri": "screenshot.jpg" }, { "uri": "screenshot.jpg" }],
    "samplers": [{ "magFilter": 9729, "minFilter": 9987 }]
 }
