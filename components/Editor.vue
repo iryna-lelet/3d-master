@@ -50,7 +50,7 @@
                 <canvas id="mini3d" ref="mini3d" @click="show">
                   Sorry your browser doesn't seem to support webgl! :(
                 </canvas>
-          </div>
+              </div>
       </div>
       <el-button class="btn_download" type="text" @click="download"> Скачать модель </el-button>
       <el-button class="btn_download" type="text" @click="downloadImage"> Скачать текстуру </el-button>
@@ -313,7 +313,7 @@ export default {
       console.log(cx.getImageData(1, 1, 100, 100));
     },
     animate(animation) {
-      this.preview.animation = this.animation = animation;
+      this.preview.animation = animation;
     },
     changeFontType(name) {
       this.font.type[name] = !this.font.type[name];
@@ -442,20 +442,18 @@ export default {
       }
     },
 
-    grab(event) {
-      this.preview.animation = false;
-      this.rotating = this.preview.do.rotate(0, event.offsetX);
-    },
-    rotate(event) {
-      if (this.rotating) this.rotating.next({ x: 0, y: event.offsetX });
-    },
-    release(event) {
-      this.rotating.next();
-      this.rotating = false;
-      setTimeout(() => {
-        this.preview.animation = this.animation;
-      }, 1500);
-    },
+    // grab(event) {
+    //   this.preview.animation = false;
+    //   this.rotating = this.preview.do.rotate(0, event.offsetX);
+    // },
+    // rotate(event) {
+    //   if (this.rotating) this.rotating.next({ x: 0, y: event.offsetX });
+    // },
+    // release(event) {
+    //   setTimeout(() => {
+    //     this.preview.animation = this.animation;
+    //   }, 1500);
+    // },
     show() {
       this.dialogVisible = true;
       if (!this.mirror) {
@@ -464,7 +462,7 @@ export default {
             width: this.$refs.previewMax.clientWidth,
             height: this.$refs.previewMax.clientHeight,
           });
-          // this.mirror.render();
+          this.mirror.render();
         });
       }
     },
