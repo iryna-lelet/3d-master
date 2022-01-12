@@ -1,5 +1,5 @@
 <template>
- <div class="wrap">
+ <div class="wrapp">
   <el-row type="flex" :gutter="8" id="app" class="stretch">
     <el-col :span="18" class="stretch">
       <div class="tool horizontal space around download"></div>
@@ -8,8 +8,8 @@
         </el-col>
         <el-col :span="14">
           <div id="drawer" ref="drawer" style="width:900px; height: 600px;">
-
-            <canvas style="background: url('./img-fons.png'); display:none;" id="d2" ref="d2"
+          
+            <canvas style="background: url(./img-fons.png); display:none;" id="d2" ref="d2"
               @mousedown="start($event)"
               @mousemove="action($event)"
               @dblclick="focus($event)"
@@ -17,34 +17,34 @@
               @mouseout="stop($event)">
             </canvas>
             <tui-image-editor ref="tuiImageEditor" @objectAdded="objectAdded" @objectActivated="objectActivated" :options="options"></tui-image-editor>
-
+         
           </div>
         </el-col>
         <div class="red_border"></div>
         <div class="green_border"></div>
         <div class="up_panel"></div>
-
+        
         <div class="down_panel"></div>
       </el-row>
-
+        
     </el-col>
     <el-col :span="6" class="column">
     <div class="fix-3d_tool">
           <div class="tool horizontal space around">
             <div class="button-fix-mini3d">
-
-                <el-button class="fix-button__mini" type="text" icon="fa fa-share" @click="cover"> Просмотр <br> на модели</el-button>
-
+            
+                <el-button class="fix-button__mini" type="text" icon="fa fa-share" @click="cover"> Перегляд <br> на моделі</el-button>
+          
                 <el-button class="fix-button__mini" type="text" icon="fa fa-pause" @click="animate(false)" v-if="preview.animation"> Старт / <br> Стоп</el-button>
                 <el-button class="fix-button__mini" type="text" icon="fa fa-play" @click="animate(true)" v-else> Старт / <br> Стоп</el-button>
-
-
-                <el-button class="fix-button__mini" type="text" icon="fa fa-trash" @click="preview.clear()"> Очистить <br> модель </el-button>
+                
+               
+                <el-button class="fix-button__mini" type="text" icon="fa fa-trash" @click="preview.clear()"> Очистити <br> модель </el-button> 
                 </div>
                 <!--<span class="block title">
                   <el-color-picker v-model="sceneColor" size="mini" @change="changeSceneColor"></el-color-picker>
-                  <span class="title"> Scene </span>
-                </span>-->
+                  <span class="title"> Scene </span>-->
+                </span>
               </div>
               <div id="previewMini" ref="previewMini">
                 <canvas id="mini3d" ref="mini3d" @click="show">
@@ -52,9 +52,8 @@
                 </canvas>
           </div>
       </div>
-      <el-button class="btn_download" type="text" @click="download"> Скачать модель </el-button>
-      <el-button class="btn_download" type="text" @click="downloadImage"> Скачать текстуру </el-button>
-      <el-button class="btn_download" type="text" @click="$router.push('help')"> Подсказка </el-button>
+      <el-button class="btn_downdload" type="text" @click="downloadImage"> Завантажити текстуру </el-button>
+      <el-button class="btn_downdload" type="text" @click="$router.push('help')"> Інструкція </el-button>
       <el-dialog
         custom-class="column"
         :visible.sync="dialogVisible"
@@ -63,11 +62,10 @@
           <order-form :source="source" />
         </span>
         <div id="previewMax" ref="previewMax">
-          <canvas id="max3d" ref="max3d" >
-            <!-- @mousedown="grab($event)"
-@mouseup="release($event)"
-             @mousemove="rotate($event)"-->
-
+          <canvas id="max3d" ref="max3d"
+            @mousedown="grab($event)"
+            @mousemove="rotate($event)"
+            @mouseup="release($event)">
           </canvas>
         </div>
         <span slot="footer">
@@ -79,7 +77,7 @@
           <el-button @click="dialogVisible = false"> Cancel </el-button>
         </span>
       </el-dialog>
-      <transition-group name="flip-list" tag="ul" class="el-upload-list el-upload-list--picture grow">
+      <!-- <transition-group name="flip-list" tag="ul" class="el-upload-list el-upload-list--picture grow">
         <li v-for="(layer, index) in layers" :key="layer.uid" class="el-upload-list__item" :class="selected == index && 'selected'">
           <img
             :src="layer.type == 'picture' ? layer.src : `../assets/img/${layer.type}.png`"
@@ -93,10 +91,10 @@
           <i class="fa fa-eye"></i>
           <i class="el-icon-close" @click="remove(index)"></i>
         </li>
-      </transition-group>
+      </transition-group> -->
     </el-col>
   </el-row>
-      <div class="help_btn"><i class="fas fa-question"></i></div>
+    <!--  <div class="help_btn"><i class="fas fa-question"></i></div> -->
   </div>
 </template>
 
@@ -112,67 +110,67 @@ import "../assets/js/reimg";
 import { fabric } from "fabric";
 
 let locale_ru_RU = {
-  Undo: "Отменить",
-  Redo: "Повторить",
-  Tint: "Оттенок",
-  Reset: "Сброс",
-  Delete: "Удалить",
-  DeleteAll: "Удалить всё",
-  Crop: "Обрезать",
-  Flip: "Перевернуть всё",
-  Rotate: "Повернуть",
-  Draw: "Рисовать",
-  Shape: "Фигуры",
-  Icon: "Иконки",
+  Undo: "Відмінити",
+  Redo: "Повторити",
+  Tint: "Відтінок",
+  Reset: "Скинути",
+  Delete: "Видалити",
+  DeleteAll: "Видалити все",
+  Crop: "Вирізати",
+  Flip: "Відобразити",
+  Rotate: "Повернути",
+  Draw: "Малювати",
+  Shape: "Базові фігури",
+  Icon: "Нестандартні фігури",
   Text: "Текст",
-  Mask: "Маска/Изображение",
-  Filter: "Фильтры",
-  Custom: "Свой дизайн",
-  Apply: "Принять",
-  Cancel: "Отмена",
-  "Flip X": "Отразить по Х",
-  "Flip Y": "Отразить по Y",
+  Mask: "Завантажити зображення",
+  Filter: "Фільтри",
+  Custom: "Свій дизайн",
+  Apply: "Застосувати",
+  Cancel: "Відміна",
+  "Flip X": "Відобразити по Х",
+  "Flip Y": "Відобразити по Y",
   Square: "Квадрат",
-  Range: "Толщина",
-  Free: "Свободно",
-  Straight: "Прямая",
-  Color: "Цвет",
-  Stroke: "Толщина контура",
-  Rectangle: "Прямоугольник",
-  Circle: "Круг",
-  Triangle: "Треугольник",
-  Fill: "Заполнение",
-  "Text size": "Размер текста",
-  Left: "Слева",
+  Range: "Товщина",
+  Free: "Довільна",
+  Straight: "Пряма",
+  Color: "Колір",
+  Stroke: "Товщина контура",
+  Rectangle: "Прямокутник",
+  Circle: "Коло",
+  Triangle: "Трикутник",
+  Fill: "Заливка",
+  "Text size": "Розмір текста",
+  Left: "Зліва",
   Right: "Справа",
-  Center: "Центровать",
-  "Load Mask Image": "Загрузить изображение маски",
-  Arrow: "Стрелка",
-  "Arrow-2": "Стрелка-2",
-  "Arrow-3": "Стрелка-3",
-  "Star-1": "Звезда",
-  "Star-2": "Звезда-2",
-  Polygon: "Многоугольник",
-  Location: "Расположение",
-  Heart: "Сердце",
-  Bubble: "Пузырь",
-  "Custom icon": "Своя иконка",
-  /*Grayscale: "Оттенки Серого",
-    Sepia: "Сепия",
+  Center: "По центру",
+  "Load Mask Image": "Завантажити зображення",
+  Arrow: "Стрілка",
+  "Arrow-2": "Стрілка-2",
+  "Arrow-3": "Стрілка-3",
+  "Star-1": "Зірка",
+  "Star-2": "Зірка-2",
+  Polygon: "Багатокутник",
+  Location: "Розміщення",
+  Heart: "Серде",
+  Bubble: "Бульбашка",
+  "Custom icon": "Своя іконка",
+  Grayscale: "Відтінки сірого",
+  Sepia: "Сепія",
     Blur: "Размытие",
     Emboss: "Тиснение",
-    Invert: "Инверсия",
+    Invert: "Інверсія",
     "Sepia2": "Сепия-2",
     Sharpen: "Четкость",
     "Remove White": "Убрать белый",
     Distanse: "Расстояние",
-    Brightness: "Яркость",
+    Brightness: "Яскравість",
     Noise: "Шумы",
     Pixelate: "Пикселизация",
     "Color Filter": "Цветовой фильтр",
     Threshold: "Предел",
     Blend: "Смешивание",
-    Multiply: "Перемножить",*/
+    Multiply: "Перемножить",
 };
 
 export default {
@@ -194,6 +192,7 @@ export default {
             name: "SampleImage",
           },
           locale: locale_ru_RU,
+          menu: ['flip', 'rotate', 'draw', 'shape', 'icon', 'text', 'mask', 'filter'],
         },
       },
       dialogVisible: false,
@@ -274,11 +273,6 @@ export default {
   },
 
   methods: {
-    async download() {
-      const blob = await this.preview.export();
-      const url = window.URL.createObjectURL(blob);
-      location.replace(url);
-    },
     async downloadImage() {
       const texture = this.$refs.tuiImageEditor.invoke("toDataURL");
       const match = /(data:.*);.*,(.*)/g.exec(texture);
@@ -289,15 +283,35 @@ export default {
       saveAs(blob, `image.png`);
     },
     objectActivated(props) {
-      let elem = document.querySelector(".tui-image-editor-submenu");
-      elem.classList.remove('visible');
-      elem.classList.add('hidden');
+    //   let elem = document.querySelector(".tui-image-editor-submenu");
+    //   elem.classList.remove('visible');
+    //   elem.classList.add('hidden');
+      /*console.log(props);
+      console.log(props.type);
+      console.log(props.id);
+      const data = document.querySelector(".lower-canvas");
+      const cx = data.getContext("2d");
+
+      let imagedata = cx.getImageData(1,1,120,120)
+      var canvas = document.createElement('canvas');
+      var ctx = canvas.getContext('2d');
+      canvas.width = imagedata.width;
+      canvas.height = imagedata.height;
+      ctx.putImageData(imagedata, 0, 0);
+
+      var png = ReImg.fromCanvas(canvas).toPng();
+      this.$refs.tuiImageEditor.invoke('addImageObject', png.src);*/
     },
     objectAdded(props) {
       /* let canvas = new fabric.Canvas('can');*/
       console.log(props);
       const data = document.querySelector(".lower-canvas");
       const cx = data.getContext("2d");
+      /*var circle = new fabric.Circle({
+        radius: 120, fill: 'green', left: 20, top: 0
+      });
+      canvas.add(circle);
+      canvas.renderAll();*/
       let imagedata = cx.getImageData(1, 1, 120, 120);
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");
@@ -502,60 +516,71 @@ export default {
     );
   },
   mounted() {
+    document.querySelector('.tie-btn-reset').remove();
     document.querySelector('.tui-image-editor-header').remove();
     document.querySelector('.tie-mask-apply').remove();
-    document.querySelector('.tie-btn-filter').remove();
+    document.querySelector('.tie-blur').closest('.tui-image-editor-checkbox').style.display='none';
+    document.querySelector('.tie-emboss').closest('.tui-image-editor-checkbox').style.display='none';
+    document.querySelector('.tie-vintage').closest('.tui-image-editor-checkbox').style.display='none';
+    document.querySelector('.tie-sharpen').closest('.tui-image-editor-checkbox').style.display='none';
+    document.querySelector('.tie-remove-white').closest('.tui-image-editor-checkbox-group').style.display='none';
+    document.querySelector('.tie-noise').closest('.tui-image-editor-checkbox-group').style.display='none';
+    document.querySelector('.tie-pixelate').closest('.tui-image-editor-checkbox-group').style.display='none';
+    document.querySelector('.tie-color-filter').closest('.tui-image-editor-checkbox-group').style.display='none';
+    document.querySelector('.tie-multiply').closest('.filter-color-item').style.display='none';
+    document.querySelector('.tie-blend').closest('.filter-color-item').style.display='none';
 
-    let inputArray = document.querySelectorAll(
-      "input.tui-colorpicker-palette-hex"
-    );
 
-    const delegElem = document.querySelector(".tui-image-editor-menu");
+    // let inputArray = document.querySelectorAll(
+    //   "input.tui-colorpicker-palette-hex"
+    // );
 
-    delegElem.onclick = (event) => {
-      let target = event.target; // где был клик?
+    // const delegElem = document.querySelector(".tui-image-editor-menu");
 
-      if (target.tagName != "LI") return;
-      let elem = document.querySelector(".tui-image-editor-submenu");
-      elem.classList.remove('hidden');
-      elem.classList.add('visible');
-    };
+    // delegElem.onclick = (event) => {
+    //   let target = event.target; // где был клик?
 
-    document
-      .querySelectorAll("div.tui-colorpicker-container")
-      .forEach((elem) => {
-        elem.insertAdjacentHTML(
-          "beforeend",
-          `<button id="change_draw">Изменить</button>`
-        );
-      });
-    inputArray.forEach((elem) => {
-      elem.setAttribute("type", "color");
-    });
-    const btn = document.querySelectorAll("#change_draw");
-    function change() {
-      document
-        .querySelectorAll(".tui-colorpicker-palette-hex")
-        .forEach((elem) => {
-          elem.setAttribute("type", "color");
-        });
-    }
-    btn.forEach((elem) => {
-      elem.addEventListener("click", change, false);
-    });
+    //   if (target.tagName != "LI") return;
+    //   let elem = document.querySelector(".tui-image-editor-submenu");
+    //   elem.classList.remove('hidden');
+    //   elem.classList.add('visible');
+    // };
 
-    document
-      .querySelector(".tie-btn-rotate")
-      .insertAdjacentHTML(
-        "afterend",
-        '<li class="tui-image-editor-item"><div class="tui-image-editor-icpartition"></div></li>'
-      );
-    document
-      .querySelector(".tie-btn-text")
-      .insertAdjacentHTML(
-        "afterend",
-        '<li class="tui-image-editor-item"><div class="tui-image-editor-icpartition"></div></li>'
-      );
+    // document
+    //   .querySelectorAll("div.tui-colorpicker-container")
+    //   .forEach((elem) => {
+    //     elem.insertAdjacentHTML(
+    //       "beforeend",
+    //       `<button id="change_draw">Изменить</button>`
+    //     );
+    //   });
+    // inputArray.forEach((elem) => {
+    //   elem.setAttribute("type", "color");
+    // });
+    // const btn = document.querySelectorAll("#change_draw");
+    // function change() {
+    //   document
+    //     .querySelectorAll(".tui-colorpicker-palette-hex")
+    //     .forEach((elem) => {
+    //       elem.setAttribute("type", "color");
+    //     });
+    // }
+    // btn.forEach((elem) => {
+    //   elem.addEventListener("click", change, false);
+    // });
+
+    // document
+    //   .querySelector(".tie-btn-rotate")
+    //   .insertAdjacentHTML(
+    //     "afterend",
+    //     '<li class="tui-image-editor-item"><div class="tui-image-editor-icpartition"></div></li>'
+    //   );
+    // document
+    //   .querySelector(".tie-btn-text")
+    //   .insertAdjacentHTML(
+    //     "afterend",
+    //     '<li class="tui-image-editor-item"><div class="tui-image-editor-icpartition"></div></li>'
+    //   );
 
     this.drawer = new Drawer(document.querySelector(".upper-canvas "), {
       width: this.$refs.drawer.clientWidth,
@@ -564,10 +589,10 @@ export default {
     });
     this.hover = this.drawer.helpers.hover();
     this.preview = new Preview(this.$refs.mini3d, {
-      path: "../assets/models/cup/cup.gltf",
+      path: "../assets/models/cup.json",
       width: this.$refs.previewMini.clientWidth,
       height: this.$refs.previewMini.clientHeight,
-      sceneColor: "#e8e8e8",
+      sceneColor: this.sceneColor,
       animation: false,
     });
     this.preview.render();
@@ -612,7 +637,10 @@ body {
 }
 
 .tui-image-editor-controls {
-  background-color: #4b6891 !important;
+  background-color: #ffffff !important;
+  border-bottom: 2px solid #ff9933;
+  border-left: 2px solid #ff9933;
+  border-right: 2px solid #ff9933;
 }
 
 .tui-image-editor-submenu {
@@ -634,10 +662,11 @@ body {
 
 .tui-image-editor-main-container {
   background-color: #e8e8e8 !important;
-  border: 2px solid #4b6891 !important;
+  //border: 2px solid #4b6891 !important;
+  border: 2px solid #ff9933 !important;
 }
 
-#drawer
+/* #drawer
   > div
   > div.tui-image-editor-main-container
   > div.tui-image-editor-main.tui-image-editor-menu-draw
@@ -652,8 +681,8 @@ body {
   > div.tui-colorpicker-palette-container
   > ul {
   display: none;
-}
-
+} */
+/* 
 #drawer
   > div
   > div.tui-image-editor-main-container
@@ -669,9 +698,9 @@ body {
   > div.tui-colorpicker-palette-container
   > ul {
   display: none;
-}
+} */
 
-#drawer
+/* #drawer
   > div
   > div.tui-image-editor-main-container
   > div.tui-image-editor-main.tui-image-editor-menu-shape
@@ -686,9 +715,9 @@ body {
   > div.tui-colorpicker-palette-container
   > ul {
   display: none;
-}
+} */
 
-#drawer
+/* #drawer
   > div
   > div.tui-image-editor-main-container
   > div.tui-image-editor-main.tui-image-editor-menu-icon
@@ -703,9 +732,9 @@ body {
   > div.tui-colorpicker-palette-container
   > ul {
   display: none;
-}
+} */
 
-#drawer
+/* #drawer
   > div
   > div.tui-image-editor-main-container
   > div.tui-image-editor-main.tui-image-editor-menu-text
@@ -720,15 +749,15 @@ body {
   > div.tui-colorpicker-palette-container
   > ul {
   display: none;
-}
+} */
 
-.tui-colorpicker-palette-preview {
+/* .tui-colorpicker-palette-preview {
   display: none;
-}
+} */
 
-.tui-image-editor-container .tui-colorpicker-palette-hex {
+/* .tui-image-editor-container .tui-colorpicker-palette-hex {
   margin-top: 0;
-}
+} */
 
 #change_draw {
   border-radius: 0 !important;
@@ -746,7 +775,7 @@ body {
   color: #4b6891 !important;
 }
 
-#drawer
+/* #drawer
   > div
   > div.tui-image-editor-main-container
   > div.tui-image-editor-main.tui-image-editor-menu-text
@@ -761,20 +790,20 @@ body {
   > div.tui-colorpicker-palette-container
   > ul {
   display: none;
-}
+} */
 
-.tui-colorpicker-clearfix {
+/* .tui-colorpicker-clearfix {
   margin-top: 0;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   border: none !important;
   background-color: white !important;
-}
+} */
 
-.tui-colorpicker-palette-hex {
+/* .tui-colorpicker-palette-hex {
   font-size: 22px !important;
-}
-
+} */
+/* 
 #drawer
   > div
   > div.tui-image-editor-main-container
@@ -787,15 +816,19 @@ body {
   > div.color-picker-control
   > div.triangle {
   left: 182px !important;
-}
+} */
 
-.color-picker-control {
+/* .color-picker-control {
   left: -76px !important;
-}
+} */
 
 .use-default {
-  fill: white !important;
-  stroke: white !important;
+  fill: #ff9933 !important;
+  stroke: #ff9933 !important;
+}
+
+.tui-image-editor-container .tui-image-editor-icpartition {
+  background-color: #ff9933;
 }
 
 #drawer
@@ -828,14 +861,14 @@ body {
   color: #4b6891 !important;
 }
 
-#drawer
+/* #drawer
   > div
   > div.tui-image-editor-main-container
   > div.tui-image-editor-header
   > div.tui-image-editor-header-buttons
   > div {
   display: none;
-}
+} */
 
 .column {
   display: flex;
@@ -849,6 +882,8 @@ body {
 }
 .tui-image-editor{
   margin-bottom: -10px !important;
+  border: none;
+  background: white;
 }
 .stretch {
   display: flex;
@@ -863,7 +898,7 @@ body {
   flex-direction: column;
 }
 .tool .title {
-  font-family: Arial,serif;
+  font-family: Arial;
   font-weight: 500;
   font-size: 14px;
   text-transform: capitalize;
@@ -935,7 +970,7 @@ body {
   border: 1px dashed transparent;
   height: 33%;
   cursor: pointer;
-  box-sizing: content-box;
+  box-sizing: content;
 }
 #previewMax {
   flex-grow: 1;
@@ -996,7 +1031,7 @@ span#fix-upload {
   margin-right: 8px;
 }
 .el-button--text {
-  background-color: #4b6891;
+  background-color: #ff9933;
   padding: 14px;
   color: #fff;
 }
@@ -1014,7 +1049,7 @@ span#fix-upload {
 }
 .el-button {
   font-size: 16px;
-  border-radius: 0;
+  border-radius: none;
 }
 .figures {
   padding: 11px 15px 15px 14px;
@@ -1058,7 +1093,7 @@ span#fix-upload {
   width: 270px !important;
 }
 .fix-3d_tool {
-  border: 2px solid #336699;
+  border: 2px solid #ff9933;
   border-radius: 5px;
   width: 270px !important;
 }
@@ -1066,7 +1101,7 @@ span#fix-upload {
   display: flex;
   justify-content: center;
 }
-.wrap {
+.wrapp {
   display: flex;
   justify-content: center;
 }
@@ -1074,12 +1109,12 @@ span#fix-upload {
   margin: 2% 0 -3% 21%;
   display: block;
   width: 70%;
-  border: 2px solid #336699;
+  border: 2px solid #ff9933;
   border-radius: 10px;
   background: #fff;
 }
-.fix__btn_download {
-  background-color: #336699;
+.fix__btn_downdload {
+  background-color: #ff9933;
   display: inline-block;
   margin: 3px 50px 3px 220px;
 }
@@ -1090,19 +1125,19 @@ span#fix-upload {
   display: inline-block;
   margin: 0 0 0 45px;
 }
-.btn_download {
+.btn_downdload {
   width: 270px;
   margin-top: 10px;
   padding: 13px 25px 13px 25px;
   border-radius: 0 !important;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
-  transition: all 0.2s ease-out;
-  border: 1px solid #4b6891;
+  transition: all 0.2 easa-out;
+  border: 1px solid #ff9933;
 }
-.btn_download:hover {
+.btn_downdload:hover {
   background-color: #e8e8e8 !important;
-  border-color: #4b6891 !important;
-  color: #4b6891;
+  border-color: #ff9933 !important;
+  color: #ff9933;
 }
 .fix-3d_tool {
   border-radius: 0 !important;
@@ -1112,7 +1147,7 @@ span#fix-upload {
   border-radius: 0px;
   font-size: 13px;
   padding: 5px;
-  background: #4b6891 !important;
+  background: #ff9933 !important;
 }
 .el-upload-list--picture .el-upload-list__item-thumbnail {
   margin-top: 4px;
@@ -1158,7 +1193,7 @@ i.fa.fa-chevron-down {
   padding: 5px 4px 4px 3px;
   font-size: 16px;
   background-color: #4b6891 !important;
-  border-radius: 0;
+  border-radius: 0px;
 }
 .button--trigger:hover .fa-undo {
   color: #3e3b45;
@@ -1172,19 +1207,26 @@ i.fa.fa-chevron-down {
   margin-right: 2px;
 }
 button.el-button.button--trigger.el-button--text:hover .fa-undo {
-  color: #3e3b45;
+  color: 3e3b45;
 }
 
 .el-button--text {
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
   transition: all 0.2s ease-out;
-  border: 1px solid #4b6891;
+  border: 1px solid #ff9933;
+}
+
+.el-button--text:active,
+.el-button--text:focus {
+  background-color: #ff9933;
+  color: #ffffff;
+  border-color: #ff9933;
 }
 
 .el-button--text:hover {
   background-color: white !important;
-  color: #4b6891;
-  border-color: #4b6891;
+  color: #ff9933;
+  border-color: #ff9933;
 }
 
 .fa-undo__transform {
@@ -1237,7 +1279,7 @@ i.fa.fa-eye {
 }
 .text__user {
   font-size: 18px;
-  font-family: Arial,serif;
+  font-family: Arial;
   text-align: center;
   padding: 9px 0;
   margin: 0;
@@ -1333,6 +1375,7 @@ i.fa.fa-eye {
 }
 .user__rotate {
   display: inline-block;
+  display: inline-block;
   position: absolute;
   left: 17px;
   font-size: 27px;
@@ -1344,7 +1387,7 @@ i.fa.fa-eye {
   top: 82px;
   left: 15px;
   font-size: 16px;
-  font-family: Arial,serif;
+  font-family: Arial;
 }
 .el-input__inner {
   background: #fff !important;
@@ -1399,14 +1442,14 @@ i.fa.fa-eye {
   position: relative;
   top: 5px;
   margin: 0;
-  font-family: Arial,serif;
+  font-family: Arial;
   font-weight: bold;
 }
 .small__T {
   display: inline-block;
   font-size: 13px;
   margin: 0;
-  font-family: Arial,serif;
+  font-family: Arial;
   position: relative;
   top: 5px;
   left: 5px;
@@ -1512,7 +1555,7 @@ button.el-button.el-color-dropdown__btn.el-button--default.el-button--mini.is-pl
   top: 140px;
   right: -30px;
   padding: 5px;
-  border: 2px solid #336699;
+  border: 2px solid #ff9933;
   border-radius: 5px;
 }
 .transparent__background {
@@ -1531,7 +1574,30 @@ button.el-button.el-color-dropdown__btn.el-button--default.el-button--mini.is-pl
   font-weight: 500;
 }
 
-#drawer
+.tui-image-editor-container .color-picker-control {
+  width: 380px;
+}
+
+.tui-image-editor-menu-filter .tui-image-editor-submenu-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tui-image-editor-canvas-container {
+  border: none;
+}
+
+.tui-image-editor-container .tui-image-editor-checkbox-wrap {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.tool.horizontal.space.around.download {
+  display: none;
+}
+
+/* #drawer
   > div
   > div.tui-image-editor-main-container
   > div.tui-image-editor-main.tui-image-editor-menu-draw
@@ -1547,5 +1613,5 @@ button.el-button.el-color-dropdown__btn.el-button--default.el-button--mini.is-pl
   > ul {
   visibility: hidden;
   display: none;
-}
+} */
 </style>
