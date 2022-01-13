@@ -53,7 +53,7 @@
           </div>
       </div>
       <el-button class="btn_downdload" type="text" @click="downloadImage"> Завантажити текстуру </el-button>
-      <el-button class="btn_downdload" type="text"> <router-link class="link_mode" to="/plate">Тарілка</router-link> </el-button>
+      <el-button class="btn_downdload" type="text"> <router-link class="link_mode" to="/">Склянка</router-link> </el-button>
       <el-button class="btn_downdload" type="text" @click="$router.push('help')"> Інструкція </el-button>
       <el-dialog
         custom-class="column"
@@ -73,7 +73,7 @@
           <el-button icon="fa fa-pause" @click="animate(false)" v-if="preview.animation"> Pause </el-button>
           <el-button icon="fa fa-play" @click="animate(true)" v-else> Play </el-button>
           <el-button icon="fa fa-share" @click="cover"> Cover </el-button>
-          <el-button icon="fa fa-download" @click="downloadImage"> Download </el-button>
+          <el-button icon="fa fa-download" @click="download"> Download </el-button>
           <el-button icon="fa fa-trash" @click="preview.clear()"> Clear </el-button>
           <el-button @click="dialogVisible = false"> Cancel </el-button>
         </span>
@@ -590,7 +590,7 @@ export default {
     });
     this.hover = this.drawer.helpers.hover();
     this.preview = new Preview(this.$refs.mini3d, {
-      path: "../assets/models/cup/cup.gltf",
+      path: "../assets/models/plate/plate.gltf",
       width: this.$refs.previewMini.clientWidth,
       height: this.$refs.previewMini.clientHeight,
       sceneColor: this.sceneColor,
