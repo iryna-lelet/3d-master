@@ -37,6 +37,7 @@
     "three-obj-exporter": "0.0.1",
     "tui-image-editor": "^3.11.0",
     "vue": "^2.4.4",
+    "vue-i18n": "^8.27.0",
     "vue-router": "^3.4.9",
     "vue-template-compiler": "^2.5.8",
     "vuelidate": "^0.6.1"

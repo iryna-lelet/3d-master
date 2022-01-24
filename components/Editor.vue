@@ -1,5 +1,6 @@
 <template>
  <div class="wrapp">
+   <LangSwitcher />
   <el-row type="flex" :gutter="8" id="app" class="stretch">
     <el-col :span="18" class="stretch">
       <div class="tool horizontal space around download"></div>
@@ -33,13 +34,13 @@
           <div class="tool horizontal space around">
             <div class="button-fix-mini3d">
             
-                <el-button class="fix-button__mini" type="text" icon="fa fa-share" @click="cover"> Перегляд <br> на моделі</el-button>
+                <el-button class="fix-button__mini checkOnModel" type="text" icon="fa fa-share" @click="cover"> {{ $t('CheckOnModel') }} </el-button>
           
-                <el-button class="fix-button__mini" type="text" icon="fa fa-pause" @click="animate(false)" v-if="preview.animation"> Старт / <br> Стоп</el-button>
-                <el-button class="fix-button__mini" type="text" icon="fa fa-play" @click="animate(true)" v-else> Старт / <br> Стоп</el-button>
+                <el-button class="fix-button__mini startStop" type="text" icon="fa fa-pause" @click="animate(false)" v-if="preview.animation"> {{ $t('StartStop') }} </el-button>
+                <el-button class="fix-button__mini startStop" type="text" icon="fa fa-play" @click="animate(true)" v-else> {{ $t('StartStop') }} </el-button>
                 
                
-                <el-button class="fix-button__mini" type="text" icon="fa fa-trash" @click="preview.clear()"> Очистити <br> модель </el-button> 
+                <el-button class="fix-button__mini cleanTheModel" type="text" icon="fa fa-trash" @click="preview.clear()"> {{ $t('CleanTheModel') }} </el-button> 
                 </div>
                 <!--<span class="block title">
                   <el-color-picker v-model="sceneColor" size="mini" @change="changeSceneColor"></el-color-picker>
@@ -52,8 +53,8 @@
                 </canvas>
           </div>
       </div>
-      <el-button class="btn_downdload" type="text" @click="downloadImage"> Завантажити текстуру </el-button>
-      <el-button class="btn_downdload" type="text" @click="$router.push('help')"> Інструкція </el-button>
+      <el-button class="btn_downdload" type="text" @click="downloadImage"> {{ $t('Download') }} </el-button>
+      <el-button class="btn_downdload" type="text" @click="$router.push('help')"> {{ $t('Instruction') }} </el-button>
       <el-dialog
         custom-class="column"
         :visible.sync="dialogVisible"
@@ -96,6 +97,7 @@
   </el-row>
     <!--  <div class="help_btn"><i class="fas fa-question"></i></div> -->
   </div>
+  
 </template>
 
 <script>
@@ -108,76 +110,14 @@ import { ImageEditor } from "@toast-ui/vue-image-editor";
 import "tui-image-editor/dist/tui-image-editor.css";
 import "../assets/js/reimg";
 import { fabric } from "fabric";
-
-let locale_ru_RU = {
-  Undo: "Відмінити",
-  Redo: "Повторити",
-  Tint: "Відтінок",
-  Reset: "Скинути",
-  Delete: "Видалити",
-  DeleteAll: "Видалити все",
-  Crop: "Вирізати",
-  Flip: "Відобразити",
-  Rotate: "Повернути",
-  Draw: "Малювати",
-  Shape: "Базові фігури",
-  Icon: "Нестандартні фігури",
-  Text: "Текст",
-  Mask: "Завантажити зображення",
-  Filter: "Фільтри",
-  Custom: "Свій дизайн",
-  Apply: "Застосувати",
-  Cancel: "Відміна",
-  "Flip X": "Відобразити по Х",
-  "Flip Y": "Відобразити по Y",
-  Square: "Квадрат",
-  Range: "Товщина",
-  Free: "Довільна",
-  Straight: "Пряма",
-  Color: "Колір",
-  Stroke: "Товщина контура",
-  Rectangle: "Прямокутник",
-  Circle: "Коло",
-  Triangle: "Трикутник",
-  Fill: "Заливка",
-  "Text size": "Розмір текста",
-  Left: "Зліва",
-  Right: "Справа",
-  Center: "По центру",
-  "Load Mask Image": "Завантажити зображення",
-  Arrow: "Стрілка",
-  "Arrow-2": "Стрілка-2",
-  "Arrow-3": "Стрілка-3",
-  "Star-1": "Зірка",
-  "Star-2": "Зірка-2",
-  Polygon: "Багатокутник",
-  Location: "Розміщення",
-  Heart: "Серде",
-  Bubble: "Бульбашка",
-  "Custom icon": "Своя іконка",
-  Grayscale: "Відтінки сірого",
-  Sepia: "Сепія",
-    Blur: "Размытие",
-    Emboss: "Тиснение",
-    Invert: "Інверсія",
-    "Sepia2": "Сепия-2",
-    Sharpen: "Четкость",
-    "Remove White": "Убрать белый",
-    Distanse: "Расстояние",
-    Brightness: "Яскравість",
-    Noise: "Шумы",
-    Pixelate: "Пикселизация",
-    "Color Filter": "Цветовой фильтр",
-    Threshold: "Предел",
-    Blend: "Смешивание",
-    Multiply: "Перемножить",
-};
+import LangSwitcher from './LangSwitcher.vue';
 
 export default {
   name: "app",
   components: {
     OrderForm,
     "tui-image-editor": ImageEditor,
+    LangSwitcher,
   },
   data() {
     return {
@@ -191,7 +131,7 @@ export default {
             path: "../assets/img/trans.png",
             name: "SampleImage",
           },
-          locale: locale_ru_RU,
+          locale: this.$i18n.messages[this.$i18n.locale],
           menu: ['flip', 'rotate', 'draw', 'shape', 'icon', 'text', 'mask', 'filter'],
         },
       },
@@ -530,6 +470,8 @@ export default {
     document.querySelector('.tie-multiply').closest('.filter-color-item').style.display='none';
     document.querySelector('.tie-blend').closest('.filter-color-item').style.display='none';
 
+    console.log(this.$i18n.messages)
+
 
     // let inputArray = document.querySelectorAll(
     //   "input.tui-colorpicker-palette-hex"
@@ -609,10 +551,10 @@ html,
 body {
   height: 100%;
   margin: 0;
-  background-color: #e8e8e8;
 }
 body {
   padding: 0 5px 5px;
+  background-color: #e8e8e8;
 }
 #app {
   height: 100%;
@@ -644,7 +586,7 @@ body {
 }
 
 .tui-image-editor-submenu {
-  background-color: #4b68af !important;
+  background-color: #e8e8e8 !important;
 }
 
 .tui-image-editor-main-container {
@@ -656,13 +598,33 @@ body {
   width: 15px;
 }
 
+.tie-flip-button.flipX .tui-image-editor-button.flipX svg > use.active, .tie-flip-button.flipY .tui-image-editor-button.flipY svg > use.active {
+  fill: #ff9933 !important;
+  stroke: #ff9933 !important;
+}
+
+.tie-draw-line-select-button.line .tui-image-editor-button.line svg > use.active, .tie-draw-line-select-button.free .tui-image-editor-button.free svg > use.active {
+    fill: #ff9933 !important;
+  stroke: #ff9933 !important;
+}
+
+.tie-icon-add-button.icon-bubble .tui-image-editor-button[data-icontype="icon-bubble"] svg > use.active, .tie-icon-add-button.icon-heart .tui-image-editor-button[data-icontype="icon-heart"] svg > use.active, .tie-icon-add-button.icon-location .tui-image-editor-button[data-icontype="icon-location"] svg > use.active, .tie-icon-add-button.icon-polygon .tui-image-editor-button[data-icontype="icon-polygon"] svg > use.active, .tie-icon-add-button.icon-star .tui-image-editor-button[data-icontype="icon-star"] svg > use.active, .tie-icon-add-button.icon-star-2 .tui-image-editor-button[data-icontype="icon-star-2"] svg > use.active, .tie-icon-add-button.icon-arrow-3 .tui-image-editor-button[data-icontype="icon-arrow-3"] svg > use.active, .tie-icon-add-button.icon-arrow-2 .tui-image-editor-button[data-icontype="icon-arrow-2"] svg > use.active, .tie-icon-add-button.icon-arrow .tui-image-editor-button[data-icontype="icon-arrow"] svg > use.active {
+  fill: #ff9933 !important;
+  stroke: #ff9933 !important;
+}
+
+.tie-shape-button.rect .tui-image-editor-button.rect svg > use.active, .tie-shape-button.circle .tui-image-editor-button.circle svg > use.active, .tie-shape-button.triangle .tui-image-editor-button.triangle svg > use.active {
+  fill: #ff9933 !important;
+  stroke: #ff9933 !important;
+}
+
 /*.color-picker-control {
   width: 380px !important;
 }*/
 
 .tui-image-editor-main-container {
   background-color: #e8e8e8 !important;
-  //border: 2px solid #4b6891 !important;
+  /* border: 2px solid #4b6891 !important; */
   border: 2px solid #ff9933 !important;
 }
 
@@ -823,12 +785,28 @@ body {
 } */
 
 .use-default {
-  fill: #ff9933 !important;
-  stroke: #ff9933 !important;
+  fill: #3B3B3B !important;
+  stroke: #3B3B3B !important;
 }
 
 .tui-image-editor-container .tui-image-editor-icpartition {
   background-color: #ff9933;
+}
+
+.tui-image-editor-button > label {
+  color: #000000 !important;
+}
+
+.tui-image-editor-range-wrap label {
+  color: #000000 !important;
+}
+
+.tui-image-editor-checkbox label > span {
+  color: #000000 !important;
+}
+
+.tui-image-editor-checkbox label > span::before {
+  border: 1px solid #000000 !important;
 }
 
 #drawer
@@ -838,8 +816,8 @@ body {
   > li.tui-image-editor-item.normal.active
   > svg
   > use.active.use-default {
-  fill: black !important;
-  stroke: black !important;
+  fill: #ff9933 !important;
+  stroke: #ff9933 !important;
 }
 
 .download {
@@ -1033,7 +1011,7 @@ span#fix-upload {
 .el-button--text {
   background-color: #ff9933;
   padding: 14px;
-  color: #fff;
+  color: #3B3B3B;
 }
 .fa-paint-brush:before {
   color: #3297ff;
@@ -1047,10 +1025,21 @@ span#fix-upload {
 .fa {
   padding-right: 3px;
 }
+
+.button-fix-mini3d {
+  display: flex;
+}
+
 .el-button {
   font-size: 16px;
   border-radius: none;
+  white-space: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+
 .figures {
   padding: 11px 15px 15px 14px;
   position: absolute;
@@ -1089,7 +1078,7 @@ span#fix-upload {
   margin-left: 0 !important;
 }
 .column.el-col.el-col-6 {
-  margin-top: 4.5%;
+  margin-top: 25px;
   width: 270px !important;
 }
 .fix-3d_tool {
@@ -1178,6 +1167,7 @@ i.fa.fa-chevron-down {
 }
 .tui-image-editor-submenu-style{
   padding-bottom: 12px !important;
+  background-color: #e8e8e8 !important;
 }
 .tui-image-editor-menu-draw{
   padding-bottom: 12px !important;
