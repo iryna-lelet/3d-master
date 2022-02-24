@@ -4,6 +4,7 @@ const Mailer = require('../utils/Mailer');
 const { join } = require('path');
 const crypto = require('crypto');
 const fs = require('fs');
+const axios = require('axios');
 
 const dirname = 'uploads';
 
@@ -26,9 +27,8 @@ router.post('/', (req, res, next) => {
         src: url
       }
     });
-    res.json({ url });
   } catch (err) {
-    next(err);
+    console.error(err);
   }
 });
 

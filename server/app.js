@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const { join } = require('path');
 
 const app = express();
-
 app.set('port', (process.env.PORT || 3000));
 
 const api = require('./api');
@@ -21,6 +20,7 @@ app.use('/api', api);
 app.get('/', (req, res) => {
   res.sendFile(join(__dirname, '..', 'index.html'));
 });
+
 
 app.use((req, res, next) => {
   next(new HttpError(404, 'Not Found'));

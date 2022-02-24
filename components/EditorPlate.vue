@@ -9,14 +9,14 @@
         <el-col :span="14">
           <div id="drawer" ref="drawer" style="width:900px; height: 600px;">
 
-            <canvas style="background: url(./img-fons.png); display:none;" id="d2" ref="d2"
+            <canvas style="background: url('../assets/img/img-fons.png'); display:none;" id="d2" ref="d2"
               @mousedown="start($event)"
               @mousemove="action($event)"
               @dblclick="focus($event)"
               @mouseup="stop($event)"
               @mouseout="stop($event)">
             </canvas>
-            <tui-image-editor ref="tuiImageEditor" @objectAdded="objectAdded" @objectActivated="objectActivated" :options="options"></tui-image-editor>
+            <tui-image-editor class="canvas-plate" ref="tuiImageEditor" @objectAdded="objectAdded" @objectActivated="objectActivated" :options="options"></tui-image-editor>
 
           </div>
         </el-col>
@@ -53,29 +53,29 @@
           </div>
       </div>
       <el-button class="btn_downdload" type="text" @click="downloadImage"> Завантажити текстуру </el-button>
-      <el-button class="btn_downdload" type="text"> <router-link class="link_mode" to="/">Склянка</router-link> </el-button>
+      <router-link class="el-button btn_downdload el-button--text link_mode" to="/">Склянка</router-link>
       <el-button class="btn_downdload" type="text" @click="$router.push('help')"> Інструкція </el-button>
       <el-dialog
         custom-class="column"
         :visible.sync="dialogVisible"
         :fullscreen="true">
         <span slot="title">
-          <order-form :source="source" />
+          <order-form :source="source" :model-image="getModelImage" />
         </span>
         <div id="previewMax" ref="previewMax">
-          <canvas id="max3d" ref="max3d"
-            @mousedown="grab($event)"
-            @mousemove="rotate($event)"
-            @mouseup="release($event)">
+          <canvas id="max3d" ref="max3d">
+<!--            @mousedown="grab($event)"-->
+<!--            @mousemove="rotate($event)"-->
+<!--            @mouseup="release($event)"-->
           </canvas>
         </div>
         <span slot="footer">
           <el-button icon="fa fa-pause" @click="animate(false)" v-if="preview.animation"> Pause </el-button>
           <el-button icon="fa fa-play" @click="animate(true)" v-else> Play </el-button>
           <el-button icon="fa fa-share" @click="cover"> Cover </el-button>
-          <el-button icon="fa fa-download" @click="download"> Download </el-button>
+          <el-button icon="fa fa-download" @click="downloadImage"> Download </el-button>
           <el-button icon="fa fa-trash" @click="preview.clear()"> Clear </el-button>
-          <el-button @click="dialogVisible = false"> Cancel </el-button>
+          <el-button @click="dialogVisible = false" id="closeModal"> Cancel </el-button>
         </span>
       </el-dialog>
       <!-- <transition-group name="flip-list" tag="ul" class="el-upload-list el-upload-list--picture grow">
@@ -100,17 +100,16 @@
 </template>
 
 <script>
-import Drawer from "../lib/Drawer";
-import Preview from "../lib/Preview";
-import OrderForm from "./OrderForm.vue";
-import b64toBlob from "b64-to-blob";
-import { saveAs } from "file-saver";
-import { ImageEditor } from "@toast-ui/vue-image-editor";
-import "tui-image-editor/dist/tui-image-editor.css";
-import "../assets/js/reimg";
-import { fabric } from "fabric";
+  import Drawer from "../lib/Drawer";
+  import Preview from "../lib/Preview";
+  import OrderForm from "./OrderForm.vue";
+  import b64toBlob from "b64-to-blob";
+  import {saveAs} from "file-saver";
+  import {ImageEditor} from "@toast-ui/vue-image-editor";
+  import "tui-image-editor/dist/tui-image-editor.css";
+  import "../assets/js/reimg";
 
-let locale_ru_RU = {
+  let locale_ru_RU = {
   Undo: "Відмінити",
   Redo: "Повторити",
   Tint: "Відтінок",
@@ -185,11 +184,11 @@ export default {
       useDefaultUI: true,
       options: {
         // for tui-image-editor component's "options" prop
-        cssMaxWidth: 700,
-        cssMaxHeight: 600,
+        cssMaxWidth: 350,
+        cssMaxHeight: 350,
         includeUI: {
           loadImage: {
-            path: "../assets/img/trans.png",
+            path: "../assets/trans400.png",
             name: "SampleImage",
           },
           locale: locale_ru_RU,
@@ -282,6 +281,12 @@ export default {
       const blob = b64toBlob(data, contentType);
 
       saveAs(blob, `image.png`);
+    },
+    getModelImage() {
+      const texture = this.$refs.tuiImageEditor.invoke("toDataURL");
+      const match = /(data:.*);.*,(.*)/g.exec(texture);
+	  console.log(match[2])
+      return match[2];
     },
     objectActivated(props) {
     //   let elem = document.querySelector(".tui-image-editor-submenu");
@@ -478,6 +483,7 @@ export default {
       }, 1500);
     },
     show() {
+      this.preview.clear()
       this.dialogVisible = true;
       if (!this.mirror) {
         this.$nextTick(() => {
@@ -488,6 +494,9 @@ export default {
           this.mirror.render();
         });
       }
+      setTimeout(() => {
+        this.cover()
+      },1)
     },
     empty() {},
   },
@@ -597,6 +606,8 @@ export default {
       animation: false,
     });
     this.preview.render();
+    this.show()
+    setTimeout(() => document.querySelector("#closeModal").click(),1)
   },
 };
 </script>
@@ -619,7 +630,8 @@ a {
   text-decoration: none;
 }
 .link_mode {
-  display: block;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
 }
 #app {
   height: 100%;
@@ -672,7 +684,29 @@ a {
   //border: 2px solid #4b6891 !important;
   border: 2px solid #ff9933 !important;
 }
-
+.canvas-plate >
+.tui-image-editor-main-container >
+.tui-image-editor-main >
+.tui-image-editor-wrap>
+.tui-image-editor-size-wrap >
+.tui-image-editor-align-wrap>
+.tui-image-editor>
+.tui-image-editor-canvas-container::after{
+  content: "";
+  z-index: 999;
+  border: 1px solid #911e42;
+  border-radius: 50%;
+  width: 350px;
+  height: 350px;
+  display: block;
+}
+.tui-image-editor-container .tui-image-editor-main {
+  top: 44px;
+}
+.tui-image-editor-container.top .tui-image-editor-main {
+  top: 44px;
+  height: calc(100% - 44px);
+}
 /* #drawer
   > div
   > div.tui-image-editor-main-container

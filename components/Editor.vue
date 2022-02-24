@@ -9,7 +9,7 @@
         <el-col :span="14">
           <div id="drawer" ref="drawer" style="width:900px; height: 600px;">
 
-            <canvas style="background: url(./img-fons.png); display:none;" id="d2" ref="d2"
+            <canvas style="background: url('../assets/img/img-fons.png'); display:none;" id="d2" ref="d2"
               @mousedown="start($event)"
               @mousemove="action($event)"
               @dblclick="focus($event)"
@@ -46,27 +46,28 @@
                   <span class="title"> Scene </span>
                 </span>-->
               </div>
-              <div id="previewMini" ref="previewMini">
+              <div id="previewMini" ref="previewMini" >
                 <canvas id="mini3d" ref="mini3d" @click="show">
                   Sorry your browser doesn't seem to support webgl! :(
                 </canvas>
           </div>
       </div>
       <el-button class="btn_downdload" type="text" @click="downloadImage"> Завантажити текстуру </el-button>
-      <el-button class="btn_downdload" type="text"> <router-link class="link_mode" to="/plate">Тарілка</router-link> </el-button>
+      <router-link class="el-button btn_downdload el-button--text link_mode" to="/plate">Тарілка</router-link>
       <el-button class="btn_downdload" type="text" @click="$router.push('help')"> Інструкція </el-button>
       <el-dialog
         custom-class="column"
         :visible.sync="dialogVisible"
         :fullscreen="true">
         <span slot="title">
-          <order-form :source="source" />
+          <order-form :source="source" :model-image="getModelImage" />
         </span>
         <div id="previewMax" ref="previewMax">
-          <canvas id="max3d" ref="max3d"
-            @mousedown="grab($event)"
-            @mousemove="rotate($event)"
-            @mouseup="release($event)">
+          <canvas id="max3d" ref="max3d">
+<!--            @mousedown="grab($event)"-->
+<!--            @mousemove="rotate($event)"-->
+<!--            @mouseup="release($event)"-->
+
           </canvas>
         </div>
         <span slot="footer">
@@ -75,7 +76,7 @@
           <el-button icon="fa fa-share" @click="cover"> Cover </el-button>
           <el-button icon="fa fa-download" @click="downloadImage"> Download </el-button>
           <el-button icon="fa fa-trash" @click="preview.clear()"> Clear </el-button>
-          <el-button @click="dialogVisible = false"> Cancel </el-button>
+          <el-button @click="dialogVisible = false" id="closeModal"> Cancel </el-button>
         </span>
       </el-dialog>
       <!-- <transition-group name="flip-list" tag="ul" class="el-upload-list el-upload-list--picture grow">
@@ -100,17 +101,16 @@
 </template>
 
 <script>
-import Drawer from "../lib/Drawer";
-import Preview from "../lib/Preview";
-import OrderForm from "./OrderForm.vue";
-import b64toBlob from "b64-to-blob";
-import { saveAs } from "file-saver";
-import { ImageEditor } from "@toast-ui/vue-image-editor";
-import "tui-image-editor/dist/tui-image-editor.css";
-import "../assets/js/reimg";
-import { fabric } from "fabric";
+  import Drawer from "../lib/Drawer";
+  import Preview from "../lib/Preview";
+  import OrderForm from "./OrderForm.vue";
+  import b64toBlob from "b64-to-blob";
+  import {saveAs} from "file-saver";
+  import {ImageEditor} from "@toast-ui/vue-image-editor";
+  import "tui-image-editor/dist/tui-image-editor.css";
+  import "../assets/js/reimg";
 
-let locale_ru_RU = {
+  let locale_ru_RU = {
   Undo: "Відмінити",
   Redo: "Повторити",
   Tint: "Відтінок",
@@ -185,11 +185,11 @@ export default {
       useDefaultUI: true,
       options: {
         // for tui-image-editor component's "options" prop
-        cssMaxWidth: 700,
+        cssMaxWidth: 750,
         cssMaxHeight: 600,
         includeUI: {
           loadImage: {
-            path: "../assets/img/trans.png",
+            path: "../assets/trans1024.png",
             name: "SampleImage",
           },
           locale: locale_ru_RU,
@@ -282,6 +282,11 @@ export default {
       const blob = b64toBlob(data, contentType);
 
       saveAs(blob, `image.png`);
+    },
+    getModelImage() {
+      const texture = this.$refs.tuiImageEditor.invoke("toDataURL");
+      const match = /(data:.*);.*,(.*)/g.exec(texture);
+      return match[2];
     },
     objectActivated(props) {
     //   let elem = document.querySelector(".tui-image-editor-submenu");
@@ -478,6 +483,7 @@ export default {
       }, 1500);
     },
     show() {
+      this.preview.clear()
       this.dialogVisible = true;
       if (!this.mirror) {
         this.$nextTick(() => {
@@ -488,6 +494,9 @@ export default {
           this.mirror.render();
         });
       }
+      setTimeout(() => {
+        this.cover()
+      },1)
     },
     empty() {},
   },
@@ -597,6 +606,8 @@ export default {
       animation: false,
     });
     this.preview.render();
+    this.show()
+    setTimeout(() => document.querySelector("#closeModal").click(),1)
   },
 };
 </script>
@@ -619,7 +630,8 @@ a {
   text-decoration: none;
 }
 .link_mode {
-  display: block;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
 }
 #app {
   height: 100%;
@@ -672,7 +684,13 @@ a {
   //border: 2px solid #4b6891 !important;
   border: 2px solid #ff9933 !important;
 }
-
+.tui-image-editor-container .tui-image-editor-main {
+  top: 44px;
+}
+.tui-image-editor-container.top .tui-image-editor-main {
+  top: 44px;
+  height: calc(100% - 44px);
+}
 /* #drawer
   > div
   > div.tui-image-editor-main-container
