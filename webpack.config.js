@@ -11,29 +11,30 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.css$/,
-      use: [
-        'vue-style-loader',
-        'css-loader'
-      ],
-    }, {
-      test: /\.vue$/,
-      loader: 'vue-loader',
-      options: {
-        loaders: {}
-        // other vue-loader options go here
-      }
-    }, {
-      test: /\.js$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/
-    }, {
-      test: /\.(png|jpg|gif|eot|svg|ttf|woff|woff2)$/,
-      loader: 'file-loader',
-      options: {
-        name: '[name].[ext]?[hash]'
-      }
-    }]
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ],
+      }, {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+          }
+          // other vue-loader options go here
+        }
+      }, {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      }, {
+        test: /\.(png|jpg|gif|eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]?[hash]'
+        }
+      }]
   },
   resolve: {
     alias: {
@@ -44,12 +45,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    overlay: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Cache-Control': null,
-      'X-Requested-With': null,
-    }
+    overlay: true
   },
   performance: {
     hints: false
