@@ -621,10 +621,10 @@ html,
 body {
   height: 100%;
   margin: 0;
-  background-color: #e8e8e8;
 }
 body {
   padding: 0 5px 5px;
+  background-color: #e8e8e8;
 }
 a {
   text-decoration: none;
