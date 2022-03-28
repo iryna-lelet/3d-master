@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: ['babel-polyfill', './src/main.js'],
@@ -28,7 +29,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/
       }, {
-        test: /\.(png|jpg|gif|svg|eot|svg|ttf|woff|woff2)$/,
+        test: /\.(png|jpg|gif|eot|svg|ttf|woff|woff2)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[ext]?[hash]'
@@ -60,12 +61,7 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
-    }),
+    new UglifyJsPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })

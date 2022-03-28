@@ -17,7 +17,7 @@
               @mouseup="stop($event)"
               @mouseout="stop($event)">
             </canvas>
-            <tui-image-editor ref="tuiImageEditor" @objectAdded="objectAdded" @objectActivated="objectActivated" :options="options"></tui-image-editor>
+            <tui-image-editor class="canvas-plate" ref="tuiImageEditor" @objectAdded="objectAdded" @objectActivated="objectActivated" :options="options"></tui-image-editor>
 
           </div>
         </el-col>
@@ -54,7 +54,7 @@
           </div>
       </div>
       <el-button class="btn_downdload" type="text" @click="downloadImage"> {{ $t('Download') }} </el-button>
-      <router-link class="el-button btn_downdload el-button--text link_mode" to="/plate">Тарілка</router-link>
+      <router-link class="el-button btn_downdload el-button--text link_mode" to="/">Склянка</router-link>
       <el-button class="btn_downdload" type="text" @click="$router.push('help')"> {{ $t('Instruction') }} </el-button>
       <el-dialog
         custom-class="column"
@@ -126,11 +126,11 @@ export default {
       useDefaultUI: true,
       options: {
         // for tui-image-editor component's "options" prop
-        cssMaxWidth: 750,
-        cssMaxHeight: 600,
+        cssMaxWidth: 350,
+        cssMaxHeight: 350,
         includeUI: {
           loadImage: {
-            path: "../assets/trans1024.png",
+            path: "../assets/trans400.png",
             name: "SampleImage",
           },
           locale: this.$i18n.messages[this.$i18n.locale],
@@ -542,7 +542,7 @@ export default {
     });
     this.hover = this.drawer.helpers.hover();
     this.preview = new Preview(this.$refs.mini3d, {
-      path: "../assets/models/cup/cup.gltf",
+      path: "../assets/models/plate/plate.gltf",
       width: this.$refs.previewMini.clientWidth,
       height: this.$refs.previewMini.clientHeight,
       sceneColor: this.sceneColor,
@@ -568,7 +568,6 @@ body {
 body {
   padding: 0 5px 5px;
   background-color: #e8e8e8;
-  font-family: Arial, sans-serif;
 }
 a {
   text-decoration: none;
@@ -647,6 +646,22 @@ a {
   background-color: #e8e8e8 !important;
   /* border: 2px solid #4b6891 !important; */
   border: 2px solid #ff9933 !important;
+}
+.canvas-plate >
+.tui-image-editor-main-container >
+.tui-image-editor-main >
+.tui-image-editor-wrap>
+.tui-image-editor-size-wrap >
+.tui-image-editor-align-wrap>
+.tui-image-editor>
+.tui-image-editor-canvas-container::after{
+  content: "";
+  z-index: 999;
+  border: 1px solid #911e42;
+  border-radius: 50%;
+  width: 350px;
+  height: 350px;
+  display: block;
 }
 .tui-image-editor-container .tui-image-editor-main {
   top: 44px;

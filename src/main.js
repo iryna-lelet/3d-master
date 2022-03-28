@@ -11,6 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '../assets/css/font-awesome.css'
 
 import Editor from '../components/Editor.vue'
+import EditorPlate from '../components/EditorPlate.vue'
 import Help from '../components/Help.vue'
 
 Vue.use(Vuelidate)
@@ -22,10 +23,12 @@ axios.defaults.headers['Accept-Language'] = lang;
 
 const routes = [
   { path: '/', component: Editor, name: 'editor' },
+  { path: '/plate', component: EditorPlate, name: 'plate' },
   { path: '/help', component: Help, name: 'help' }
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes // сокращённая запись для `routes: routes`
 })
 

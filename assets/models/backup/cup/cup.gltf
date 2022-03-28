@@ -1,0 +1,181 @@
+{
+   "asset": {
+      "version": "2.0",
+      "generator": "babylon.js glTF exporter for 3dsmax 2021 v20210811.2"
+   },
+   "scene": 0,
+   "scenes": [{ "nodes": [0, 1] }],
+   "nodes": [
+      {
+         "mesh": 0,
+         "translation": [-1.79981613, 1.49983585, 8.919452],
+         "rotation": [-0.003890357, -0.0419506878, 0.0116099007, 0.999044657],
+         "scale": [514.1785, 514.178345, 514.178467],
+         "name": "inside"
+      },
+      {
+         "mesh": 1,
+         "translation": [-1.79981613, 1.49983585, 8.919452],
+         "rotation": [-0.00389035721, -0.0419506878, 0.0116099, 0.999044657],
+         "scale": [514.1786, 514.1784, 514.178467],
+         "name": "outside"
+      }
+   ],
+   "meshes": [
+      {
+         "primitives": [
+            {
+               "attributes": { "POSITION": 1, "NORMAL": 2, "COLOR_0": 3, "TEXCOORD_0": 4 },
+               "indices": 0,
+               "material": 1
+            }
+         ],
+         "name": "inside"
+      },
+      {
+         "primitives": [
+            {
+               "attributes": { "POSITION": 6, "NORMAL": 7, "COLOR_0": 8, "TEXCOORD_0": 9 },
+               "indices": 5,
+               "material": 0
+            }
+         ],
+         "name": "outside"
+      }
+   ],
+   "accessors": [
+      {
+         "bufferView": 0,
+         "componentType": 5123,
+         "count": 5748,
+         "type": "SCALAR",
+         "name": "accessorIndices"
+      },
+      {
+         "bufferView": 1,
+         "componentType": 5126,
+         "count": 3426,
+         "max": [0.0041148, 0.00277368, -0.0155143207],
+         "min": [-5.08e-5, -0.00294132, -0.01968246],
+         "type": "VEC3",
+         "name": "accessorPositions"
+      },
+      {
+         "bufferView": 1,
+         "byteOffset": 41112,
+         "componentType": 5126,
+         "count": 3426,
+         "type": "VEC3",
+         "name": "accessorNormals"
+      },
+      {
+         "bufferView": 2,
+         "componentType": 5126,
+         "count": 3426,
+         "type": "VEC4",
+         "name": "accessorColors"
+      },
+      {
+         "bufferView": 3,
+         "componentType": 5126,
+         "count": 3426,
+         "type": "VEC2",
+         "name": "accessorUVs"
+      },
+      {
+         "bufferView": 0,
+         "byteOffset": 11496,
+         "componentType": 5123,
+         "count": 384,
+         "type": "SCALAR",
+         "name": "accessorIndices"
+      },
+      {
+         "bufferView": 1,
+         "byteOffset": 82224,
+         "componentType": 5126,
+         "count": 130,
+         "max": [0.00406146, 0.00269494, -0.0155701991],
+         "min": [2.54e-6, -0.00294132, -0.01963166],
+         "type": "VEC3",
+         "name": "accessorPositions"
+      },
+      {
+         "bufferView": 1,
+         "byteOffset": 83784,
+         "componentType": 5126,
+         "count": 130,
+         "type": "VEC3",
+         "name": "accessorNormals"
+      },
+      {
+         "bufferView": 2,
+         "byteOffset": 54816,
+         "componentType": 5126,
+         "count": 130,
+         "type": "VEC4",
+         "name": "accessorColors"
+      },
+      {
+         "bufferView": 3,
+         "byteOffset": 27408,
+         "componentType": 5126,
+         "count": 130,
+         "type": "VEC2",
+         "name": "accessorUVs"
+      }
+   ],
+   "bufferViews": [
+      { "buffer": 0, "byteLength": 12264, "name": "bufferViewScalar" },
+      {
+         "buffer": 0,
+         "byteOffset": 12264,
+         "byteLength": 85344,
+         "byteStride": 12,
+         "name": "bufferViewFloatVec3"
+      },
+      {
+         "buffer": 0,
+         "byteOffset": 97608,
+         "byteLength": 56896,
+         "byteStride": 16,
+         "name": "bufferViewFloatVec4"
+      },
+      {
+         "buffer": 0,
+         "byteOffset": 154504,
+         "byteLength": 28448,
+         "byteStride": 8,
+         "name": "bufferViewFloatVec2"
+      }
+   ],
+   "buffers": [{ "uri": "cup.bin", "byteLength": 182952 }],
+   "materials": [
+      {
+         "pbrMetallicRoughness": {
+            "baseColorTexture": { "index": 0 },
+            "metallicFactor": 0.0,
+            "roughnessFactor": 0.255953282
+         },
+         "doubleSided": true,
+         "name": "15 - Glossy Plastic",
+         "extras": { "babylonSeparateCullingPass": false }
+      },
+      {
+         "pbrMetallicRoughness": {
+            "baseColorTexture": { "index": 1 },
+            "metallicFactor": 0.0,
+            "roughnessFactor": 0.546446562
+         },
+         "doubleSided": true,
+         "name": "16 - Matte Plastic",
+         "extras": { "babylonSeparateCullingPass": false }
+      }
+   ],
+   "textures": [
+      { "sampler": 0, "source": 0, "name": "screenshot.jpg" },
+      { "sampler": 0, "source": 1, "name": "screenshot.jpg" }
+   ],
+   "images": [{ "uri": "screenshot.jpg" }, { "uri": "screenshot.jpg" }],
+   "samplers": [{ "magFilter": 9729, "minFilter": 9987 }]
+}

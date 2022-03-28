@@ -1,7 +1,19 @@
 <template>
   <div class="wrapper">
     <el-button type="primary" icon="fa fa-paper-plane" @click="dialogFormVisible = true"> Send to the Server </el-button>
-    <el-dialog top="3vh" append-to-body title="Send to the Server" :visible.sync="dialogFormVisible">
+    <div class="loader" v-if="isLoading"></div>
+    <el-dialog top="3vh" width="43%" append-to-body :visible.sync="isInfoPopupVisible">
+      <div v-if="this.response === 'Ready!'">
+        <h2 class="response-title">Успіх!</h2>
+        <p class="response-text">Дякуємо Вам за використання нашого сервісу!</p>
+        <p class="response-text">Шановний {{this.form.firstname}} {{this.form.lastname}}, ваше зображення успішно надіслано.</p>
+      </div>
+      <div v-else>
+        <h2 class="response-title">Невдача!</h2>
+        <p class="response-text">Повідомлення не надіслано. Повторіть надсилання ще раз!</p>
+      </div>
+    </el-dialog>
+    <el-dialog top="3vh" :show-close=false append-to-body class="response-title" title="Send to the Server" :visible.sync="dialogFormVisible">
       <el-form>
         <el-form-item :label="firstnameLabel" :class="{ 'error': $v.form.firstname.$error }">
           <el-input v-model="form.firstname" auto-complete="off" placeholder="John" @input="$v.form.firstname.$touch()"></el-input>
@@ -9,8 +21,8 @@
         <el-form-item :label="lastnameLabel" :class="{ 'error': $v.form.lastname.$error }">
           <el-input v-model="form.lastname" auto-complete="off" placeholder="Doe" @input="$v.form.lastname.$touch()"></el-input>
         </el-form-item>
-        <el-form-item :label="phoneLabel" :class="{ 'error': $v.form.phone.$error }">
-          <el-input v-model="form.phone" auto-complete="off" placeholder="+(380) XX-XXX-XXXX" @input="$v.form.phone.$touch()"></el-input>
+        <el-form-item :label="phonenumberLabel" :class="{ 'error': $v.form.phonenumber.$error }">
+          <el-input v-model="form.phonenumber" auto-complete="off" placeholder="380 XX-XXX-XXXX" @input="$v.form.phonenumber.$touch()"></el-input>
         </el-form-item>
         <el-form-item :label="emailLabel" :class="{ 'error': $v.form.email.$error }">
           <el-input v-model="form.email" auto-complete="off" placeholder="address@email.com" @input="$v.form.email.$touch()"></el-input>
@@ -25,98 +37,154 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import { required, alpha, numeric, email } from 'vuelidate/lib/validators'
-
-  export default {
-    name: 'OrderForm',
-    props: {
-      source: Function
-    },
-    data() {
-      return {
-        dialogFormVisible: false,
-        form: {
-          firstname: '',
-          lastname: '',
-          phone: '',
-          email: '',
-        }
-      };
-    },
-    validations: {
+import axios from 'axios'
+import { required, alpha, numeric, email, minLength, maxLength } from 'vuelidate/lib/validators'
+const symbolValid = (value) => {
+  const regex = /^[A-Za-zА-Яа-я]+$/gi;
+  return value.search(regex) !== -1;
+}
+export default {
+  name: 'OrderForm',
+  props: {
+    source: Function,
+    modelImage: Function,
+  },
+  data() {
+    return {
+      dialogFormVisible: false,
+      isInfoPopupVisible: false,
+      isLoading: false,
       form: {
-        firstname: {
-          required,
-          alpha
-        },
-        lastname: {
-          required,
-          alpha
-        },
-        phone: {
-          numeric
-        },
-        email: {
-          required,
-          email
-        }
-      }
-    },
-    computed: {
-      firstnameLabel() {
-        const firstname = "First name";
-        return !this.$v.form.firstname.$error ? `${firstname}*` :
-          !this.$v.form.firstname.required ? `${firstname} is required` :
-          !this.$v.form.firstname.alpha ? `${firstname} must contain only letters` :
-          `${firstname} is invalid`;
+        firstname: '',
+        lastname: '',
+        phonenumber: '',
+        email: '',
       },
-      lastnameLabel() {
-        const lastname = "Last name";
-        return !this.$v.form.lastname.$error ? `${lastname}*` :
-          !this.$v.form.lastname.required ? `${lastname} is required` :
-          !this.$v.form.lastname.alpha ? `${lastname} must contain only letters` :
-          `${lastname} is invalid`;
+      response: '',
+    };
+  },
+  validations: {
+    form: {
+      firstname: {
+        required,
+        minLength: minLength(2),
+        symbolValid
       },
-      phoneLabel() {
-        const phone = "Phone number";
-        return !this.$v.form.phone.$error ? phone :
-          !this.$v.form.phone.numeric ? `${phone} must contain only numbers` :
-          `${phone} is invalid`;
+      lastname: {
+        required,
+        minLength: minLength(2),
+        symbolValid
       },
-      emailLabel() {
-        const email = "Email";
-        return !this.$v.form.email.$error ? `${email}*` :
-          !this.$v.form.email.required ? `${email} is required` :
-          !this.$v.form.email.email ? `${email} must be formated` :
-          `${email} is invalid`;
-      }
-    },
-    methods: {
-      async confirm() {
-        try {
-          const res = await axios.post('/api/upload', {
-            ...this.form,
-            source: this.source(),
-            model: this.model()
-          });
-          this.dialogFormVisible = false;
-        } catch (err) {
-          console.error(err);
-        } 
+      phonenumber: {
+        numeric,
+        minLength: minLength(9),
+        maxLength: maxLength(15),
+      },
+      email: {
+        required,
+        email
       }
     }
-  };
+  },
+  computed: {
+    firstnameLabel() {
+      const firstname = "First name";
+      return !this.$v.form.firstname.$error ? `${firstname}*` :
+        !this.$v.form.firstname.required ? `${firstname} is required` :
+          !this.$v.form.firstname.symbolValid ? `${firstname} must contain only letters` :
+            !this.$v.form.firstname.minLength ? `${firstname} too short` :
+              `${firstname} is invalid`;
+    },
+    lastnameLabel() {
+      const lastname = "Last name";
+      return !this.$v.form.lastname.$error ? `${lastname}*` :
+        !this.$v.form.lastname.required ? `${lastname} is required` :
+          !this.$v.form.lastname.symbolValid ? `${lastname} must contain only letters` :
+            !this.$v.form.lastname.minLength ? `${lastname} too short` :
+              `${lastname} is invalid`;
+    },
+    phonenumberLabel() {
+      const phonenumber = "Phone number";
+      return !this.$v.form.phonenumber.$error ? phonenumber :
+        !this.$v.form.phonenumber.numeric ? `${phonenumber} must contain only numbers` :
+          !this.$v.form.phonenumber.minLength || !this.$v.form.phonenumber.maxLength ? `${phonenumber} does not match the length of the phone number` :
+            `${phonenumber} is invalid`;
+    },
+    emailLabel() {
+      const email = "Email";
+      return !this.$v.form.email.$error ? `${email}*` :
+        !this.$v.form.email.required ? `${email} is required` :
+          !this.$v.form.email.email ? `${email} must be formatted` :
+            `${email} is invalid`;
+    }
+  },
+  methods: {
+    async confirm() {
+      try {
+        this.dialogFormVisible = false;
+        this.isLoading = true;
+        const dataRequest = {
+          ...this.form,
+          modelImage: this.modelImage()
+        }
+        this.response = await axios.post("https://yourcups.somee.com/api/UploadFreehostMoj", {
+          ...dataRequest
+        })
+          .then(function (response) {
+            return response.data
+          })
+          .catch(function (error) {
+            console.error("Error -> " + error);
+          });
+        this.isLoading = false;
+        this.isInfoPopupVisible = true;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }
+};
 </script>
 
 <style>
-  .wrapper {
-    margin-top: 10px;
-  }
-  .error .el-input__inner {
-    border-color: #f79483;
-  }
-  .error .el-form-item__label {
-    color: #f04124;
-  }
+.wrapper {
+  margin-top: 10px;
+}
+.error .el-input__inner {
+  border-color: #f79483;
+}
+.error .el-form-item__label {
+  color: #f04124;
+}
+.response-title{
+  text-align: center;
+  font-size: 25px;
+  color: #3B3B3B;
+}
+.response-title.success{
+  color: #198754;
+}
+.response-title.failed{
+  color: #dc3545;
+}
+.response-text{
+  text-align: center;
+  font-size: 18px;
+}
+
+.loader {
+  margin: 0 auto;
+  transform: translate(-50%, -50%);
+  border: 10px solid #ff9933; /* Light grey */
+  border-top: 10px solid #3B3B3B; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
